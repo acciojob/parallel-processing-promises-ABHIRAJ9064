@@ -7,6 +7,7 @@ const images = [
   { url: "https://picsum.photos/id/238/200/300" },
   { url: "https://picsum.photos/id/239/200/300" },
 ];
+
 const imageLoad = (url) => {
   return `<img src='${url}' />`;
 };
