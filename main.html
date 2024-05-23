@@ -1,13 +1,51 @@
 <!DOCTYPE html>
-
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-
-  <body>
-    <!-- the entire body must be written by student -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Downloader</title>
+</head>
+<body>
+    <button id="download-images-button">Download Images</button>
     <div id="output"></div>
-    <script type="text/javascript" src="./script.js"></script>
-  </body>
+
+    <script>
+        // Array of image URLs
+        const images = [
+            { url: 'image1.jpg' },
+            { url: 'image2.jpg' },
+            { url: 'image3.jpg' }
+            // Add more image URLs as needed
+        ];
+
+        // Function to download an image
+        function downloadImage(image) {
+            return new Promise((resolve, reject) => {
+                const imgElement = new Image();
+                imgElement.onload = () => resolve(imgElement);
+                imgElement.onerror = () => reject(new Error(`Failed to load image's URL: ${image.url}`));
+                imgElement.src = image.url;
+            });
+        }
+
+        // Function to download all images and display them
+        function downloadAndDisplayImages() {
+            const output = document.getElementById('output');
+            output.innerHTML = ''; // Clear existing content
+
+            Promise.all(images.map(downloadImage))
+                .then((images) => {
+                    images.forEach((img) => {
+                        output.appendChild(img);
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
+        // Event listener for download button click
+        document.getElementById('download-images-button').addEventListener('click', downloadAndDisplayImages);
+    </script>
+</body>
 </html>
